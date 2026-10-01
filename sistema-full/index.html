@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle Full Atlanta | Conferência de Envios</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-icon">F</div>
+                <div>
+                    <strong>Controle Full Atlanta</strong>
+                    <span>Conferência de envios</span>
+                </div>
+            </div>
+
+            <nav>
+                <button class="nav-item active" data-section="dashboard">▦ <span>Dashboard</span></button>
+                <button class="nav-item" data-section="novo-envio">＋ <span>Novo envio</span></button>
+                <button class="nav-item" data-section="historico">◷ <span>Histórico</span></button>
+            </nav>
+
+            <div class="sidebar-footer">
+                <span>Versão 1.0</span>
+                <small>Funcionamento local</small>
+            </div>
+        </aside>
+
+        <main class="main">
+            <header class="topbar">
+                <div>
+                    <p class="eyebrow">CONTROLE OPERACIONAL</p>
+                    <h1 id="page-title">Dashboard</h1>
+                </div>
+                <button class="primary-btn" id="new-shipment-top">＋ Novo envio</button>
+            </header>
+
+            <section id="dashboard" class="section active-section">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span>Envios cadastrados</span>
+                        <strong id="stat-total">0</strong>
+                        <small>Total registrado no navegador</small>
+                    </div>
+                    <div class="stat-card success">
+                        <span>Conferidos</span>
+                        <strong id="stat-ok">0</strong>
+                        <small>Envios finalizados corretamente</small>
+                    </div>
+                    <div class="stat-card warning">
+                        <span>Pendentes</span>
+                        <strong id="stat-pending">0</strong>
+                        <small>Aguardando conferência</small>
+                    </div>
+                    <div class="stat-card danger">
+                        <span>Com divergência</span>
+                        <strong id="stat-error">0</strong>
+                        <small>Falta ou excesso de itens</small>
+                    </div>
+                </div>
+
+                <div class="panel">
+                    <div class="panel-header">
+                        <div>
+                            <h2>Envios recentes</h2>
+                            <p>Confira o andamento das últimas conferências.</p>
+                        </div>
+                        <button class="ghost-btn" id="go-history">Ver histórico</button>
+                    </div>
+                    <div id="recent-list" class="table-wrap"></div>
+                </div>
+            </section>
+
+            <section id="novo-envio" class="section">
+                <div class="panel">
+                    <div class="panel-header">
+                        <div>
+                            <h2>Novo envio</h2>
+                            <p>Cadastre os produtos que serão conferidos.</p>
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <label>
+                            Número do envio
+                            <input id="shipment-number" type="text" placeholder="Ex.: FULL-000123">
+                        </label>
+                        <label>
+                            Observação
+                            <input id="shipment-note" type="text" placeholder="Ex.: Expedição da manhã">
+                        </label>
+                    </div>
+
+                    <div class="add-product-box">
+                        <h3>Adicionar produto</h3>
+                        <div class="product-form">
+                            <label>
+                                SKU
+                                <input id="sku" type="text" placeholder="Ex.: ABC123">
+                            </label>
+                            <label class="product-name-field">
+                                Produto
+                                <input id="product-name" type="text" placeholder="Nome do produto">
+                            </label>
+                            <label>
+                                Quantidade
+                                <input id="expected-qty" type="number" min="1" value="1">
+                            </label>
+                            <button class="secondary-btn" id="add-product">Adicionar</button>
+                        </div>
+                    </div>
+
+                    <div id="draft-products" class="table-wrap"></div>
+
+                    <div class="form-actions">
+                        <button class="ghost-btn" id="clear-draft">Limpar</button>
+                        <button class="primary-btn" id="start-check">Criar envio e conferir</button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="conferencia" class="section">
+                <div class="panel">
+                    <div class="panel-header">
+                        <div>
+                            <p class="eyebrow">CONFERÊNCIA EM ANDAMENTO</p>
+                            <h2 id="check-title">Envio</h2>
+                            <p id="check-note"></p>
+                        </div>
+                        <div id="check-status" class="status-badge pending">Pendente</div>
+                    </div>
+
+                    <div class="progress-area">
+                        <div class="progress-info">
+                            <span>Progresso da conferência</span>
+                            <strong id="progress-text">0%</strong>
+                        </div>
+                        <div class="progress"><div id="progress-bar"></div></div>
+                    </div>
+
+                    <div id="check-products" class="check-list"></div>
+
+                    <div class="check-summary">
+                        <div><span>Itens esperados</span><strong id="sum-expected">0</strong></div>
+                        <div><span>Itens conferidos</span><strong id="sum-checked">0</strong></div>
+                        <div><span>Divergência</span><strong id="sum-difference">0</strong></div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button class="ghost-btn" id="back-dashboard">Voltar</button>
+                        <button class="primary-btn" id="finish-check" disabled>Finalizar conferência</button>
+                    </div>
+                </div>
+            </section>
+
+            <section id="historico" class="section">
+                <div class="panel">
+                    <div class="panel-header">
+                        <div>
+                            <h2>Histórico de envios</h2>
+                            <p>Todos os envios salvos neste navegador.</p>
+                        </div>
+                        <button class="danger-outline" id="clear-history">Limpar histórico</button>
+                    </div>
+                    <div id="history-list" class="table-wrap"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="toast" class="toast"></div>
+    <script src="script.js"></script>
+</body>
+</html>
